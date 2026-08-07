@@ -1,0 +1,42 @@
+main {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    direction: rtl;
+   
+}
+main p {
+    display: flex;
+    flex-wrap: wrap;    
+    justify-content: center; 
+}
+span {
+    display: inline-block;
+    margin: 4px 4px;
+    font-size: 24px;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+
+}
+
+span.correct {
+    
+    background-color: rgba(0, 128, 0, 0.527);
+}
+span.incorrect {
+       background-color: rgba(255, 0, 0, 0.527);    
+}
+main #text {
+    width: 50%;
+    margin: 20px auto;
+}
+.next {
+    border-bottom: 2px solid blue;
+    animation: blink 0.8s infinite;
+}
+
+ @keyframes blink {
+    0% { border-color: blue; }
+    50% { border-color: transparent; }
+    100% { border-color: blue; }
+}
