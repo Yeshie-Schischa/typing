@@ -26,8 +26,9 @@ document.addEventListener("keydown", (e) => {
     correctCount++;
     document.getElementById("correct-count").textContent = correctCount;
     const nextSpan = textElement.querySelectorAll("span")[currentIndex+1];
-    nextSpan.classList.add("next");
-  
+    try {
+      nextSpan.classList.add("next");
+    } catch (error) {}
     width += 100 / textToType.length;
     progressMover.style.width = width + "%";
     currentIndex++;
