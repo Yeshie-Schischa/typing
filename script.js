@@ -1,22 +1,23 @@
 const correctClick = new Audio("correctClick.mp3");
+const startButton = document.getElementById("start-button");
+const textElement = document.getElementById("text");
+const progressMover = document.getElementById("progress-mover");
+function createRandomString(letters) {
+  let randomString = "";
+  for (let i = 0; i < 20; i++) {
+    randomString += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return randomString;
+} 
 
-let textToType = "בא נגיד שאתה יודע מה שאתה מדבר אבל בכל זאת אתה לא יודע מה שאתה מדבר";
-let textElement = document.getElementById("text");
-textElement.textContent = ""
-let arrayOfWords = textToType.split(" ");
-let arrayOfCharacters = textToType.split("");
-console.log(arrayOfCharacters);
-arrayOfCharacters.forEach((char) => {
-  textElement.innerHTML += `<span>${char}</span>`;
-});
-
+let textToType = "";
 let correctCount = 0;
 let incorrectCount = 0;
 let currentIndex = 0;
-let currentSpan = textElement.querySelectorAll("span")[currentIndex];
-currentSpan.classList.add("next");
+let width = 0;
+progressMover.style.width = width + "%";
 document.addEventListener("keydown", (e) => {
-  if (e.key === arrayOfCharacters[currentIndex]) {
+  if (e.key === Array.from(textToType)[currentIndex]) {
     correctClick.play();
     currentSpan = textElement.querySelectorAll("span")[currentIndex];
     currentSpan.classList.remove("incorrect");
@@ -26,11 +27,20 @@ document.addEventListener("keydown", (e) => {
     document.getElementById("correct-count").textContent = correctCount;
     const nextSpan = textElement.querySelectorAll("span")[currentIndex+1];
     nextSpan.classList.add("next");
+  
+    width += 100 / textToType.length;
+    progressMover.style.width = width + "%";
     currentIndex++;
   } else {
    
     const currentSpan = textElement.querySelectorAll("span")[currentIndex];
-    
+    currentSpan.animate([
+      { transform: "translateX(0px)" },
+      { transform: "translateX(-10px)" },
+    ], {
+      duration: 100,
+      iterations: 1
+    });
     currentSpan.classList.add("incorrect");
     incorrectCount++;
     document.getElementById("incorrect-count").textContent = incorrectCount;
@@ -38,7 +48,28 @@ document.addEventListener("keydown", (e) => {
   
 }); 
 
-const resetButton = document.getElementById("reset-button");
+class TypingLesson {
+  constructor(text) {
+    this.text = text;
+  }
+}
+const lessons= [new TypingLesson("חכ")];
+
+startButton.addEventListener("click", () => {
+  textToType = createRandomString(lessons[0].text);
+  Array.from(textToType).forEach((char) => {
+    textElement.innerHTML += `<span>${char}</span>`;
+  });
+  let currentSpan = textElement.querySelectorAll("span")[currentIndex];
+  currentSpan.classList.add("next");
+})
+
+
+
+
+
+
+/* const resetButton = document.getElementById("reset-button");
 resetButton.addEventListener("click", () => {
   textToType = "";
   correctCount = 0;
@@ -66,4 +97,4 @@ resetButton.addEventListener("click", () => {
     currentIndex = 0;
 
     resetButton.blur();
-});
+}); */
