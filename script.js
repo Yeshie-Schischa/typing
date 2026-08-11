@@ -2,6 +2,15 @@ const correctClick = new Audio("correctClick.mp3");
 const startButton = document.getElementById("start-button");
 const textElement = document.getElementById("text");
 const progressMover = document.getElementById("progress-mover");
+
+const timer = document.getElementById("timer");
+let time = 0
+const startTimer = () => {
+  time++
+  timer.innerText = time
+}
+
+
 function createRandomString(letters) {
   let randomString = "";
   for (let i = 0; i < 20; i++) {
@@ -17,6 +26,7 @@ let currentIndex = 0;
 let width = 0;
 progressMover.style.width = width + "%";
 document.addEventListener("keydown", (e) => {
+  setInterval(startTimer, 1000)
   if (e.key === Array.from(textToType)[currentIndex]) {
     correctClick.play();
     currentSpan = textElement.querySelectorAll("span")[currentIndex];
