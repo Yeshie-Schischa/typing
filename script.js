@@ -2,12 +2,18 @@ const correctClick = new Audio("correctClick.mp3");
 const startButton = document.getElementById("start-button");
 const textElement = document.getElementById("text");
 const progressMover = document.getElementById("progress-mover");
+const keyboardChange = document.getElementById("keyboard-change");
+const hebrewRegex = /[\u0590-\u05FF]/
+const englishRegex = /[a-zA-Z]/;
+console.log(hebrewRegex.test('d'))
+keyboardChange.showModal();
+keyboardChange.close();
 
 const timer = document.getElementById("timer");
 let time = 0
 const startTimer = () => {
   time++
-  timer.innerText = time
+  timer.innerText = `${(time/60).toFixed()}:${String((time % 60).toFixed()).padStart(2, "0")}`
 }
 
 
@@ -24,21 +30,39 @@ let correctCount = 0;
 let incorrectCount = 0;
 let currentIndex = 0;
 let width = 0;
-progressMover.style.width = width + "%";
+let timming
+let isFirstKey = true
 document.addEventListener("keydown", (e) => {
-  setInterval(startTimer, 1000)
+
+if (!hebrewRegex.test(e.key) && !englishRegex.test(e.key)){
+    
+    return
+  } else if(!hebrewRegex.test(e.key)){
+    keyboardChange.showModal();
+    return
+  }
+
+  if (isFirstKey) {
+    timming = setInterval(startTimer, 1000)
+    isFirstKey = false
+    console.log(isFirstKey)
+  }
+  
   if (e.key === Array.from(textToType)[currentIndex]) {
     correctClick.play();
     currentSpan = textElement.querySelectorAll("span")[currentIndex];
     currentSpan.classList.remove("incorrect");
     currentSpan.classList.remove("next");
     currentSpan.classList.add("correct");
+      if(currentSpan.nextElementSibling){
+      currentSpan.nextElementSibling.classList.add("next")
+      } else {
+        clearInterval(timming)
+      }
+ 
     correctCount++;
     document.getElementById("correct-count").textContent = correctCount;
-    const nextSpan = textElement.querySelectorAll("span")[currentIndex+1];
-    try {
-      nextSpan.classList.add("next");
-    } catch (error) {}
+   
     width += 100 / textToType.length;
     progressMover.style.width = width + "%";
     currentIndex++;
