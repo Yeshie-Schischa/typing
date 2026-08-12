@@ -4,10 +4,9 @@ const textElement = document.getElementById("text");
 const progressMover = document.getElementById("progress-mover");
 const keyboardChange = document.getElementById("keyboard-change");
 const hebrewRegex = /[\u0590-\u05FF]/
-const englishRegex = /[a-zA-Z]/;
-console.log(hebrewRegex.test('d'))
-keyboardChange.showModal();
-keyboardChange.close();
+const englishRegex = /^[a-zA-Z]$/;
+const dialogOk = document.getElementById("dialog-ok")
+
 
 const timer = document.getElementById("timer");
 let time = 0
@@ -34,15 +33,28 @@ let timming
 let isFirstKey = true
 document.addEventListener("keydown", (e) => {
 
-if (!hebrewRegex.test(e.key) && !englishRegex.test(e.key)){
-    
-    return
-  } else if(!hebrewRegex.test(e.key)){
+if (englishRegex.test(e.key)){
+    console.log(e.key)
     keyboardChange.showModal();
+    e.preventDefault()
     return
   }
 
-  if (isFirstKey) {
+
+  currentSpan = textElement.querySelectorAll("span")[currentIndex];
+
+  if(!hebrewRegex.test(e.key)){
+    currentSpan.animate([
+      { transform: "translateX(0px)" },
+      { transform: "translateX(-10px)" },
+    ], {
+      duration: 100,
+      iterations: 1
+    });
+    return
+  }
+
+    if (isFirstKey) {
     timming = setInterval(startTimer, 1000)
     isFirstKey = false
     console.log(isFirstKey)
@@ -50,7 +62,7 @@ if (!hebrewRegex.test(e.key) && !englishRegex.test(e.key)){
   
   if (e.key === Array.from(textToType)[currentIndex]) {
     correctClick.play();
-    currentSpan = textElement.querySelectorAll("span")[currentIndex];
+    
     currentSpan.classList.remove("incorrect");
     currentSpan.classList.remove("next");
     currentSpan.classList.add("correct");
@@ -82,7 +94,8 @@ if (!hebrewRegex.test(e.key) && !englishRegex.test(e.key)){
   }
   
 }); 
-
+dialogOk.addEventListener("click", () => {
+  keyboardChange.close()})
 class TypingLesson {
   constructor(text) {
     this.text = text;
