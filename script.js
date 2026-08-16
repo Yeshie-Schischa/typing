@@ -5,6 +5,7 @@ const progressMover = document.getElementById("progress-mover");
 const keyboardChange = document.getElementById("keyboard-change");
 const hebrewRegex = /[\u0590-\u05FF]/
 const englishRegex = /^[a-zA-Z]$/;
+const symbolRegex = /,.\;\//
 const dialogOk = document.getElementById("dialog-ok")
 
 
@@ -96,12 +97,20 @@ if (englishRegex.test(e.key)){
 }); 
 dialogOk.addEventListener("click", () => {
   keyboardChange.close()})
+
 class TypingLesson {
   constructor(text) {
     this.text = text;
+    this.userInfo = {
+      correctCount: 0,
+      incorrectCount: 0,
+      time: 0
+    }
   }
 }
 const lessons= [new TypingLesson("חכ")];
+
+
 
 startButton.addEventListener("click", () => {
   textToType = createRandomString(lessons[0].text);
@@ -110,6 +119,9 @@ startButton.addEventListener("click", () => {
   });
   let currentSpan = textElement.querySelectorAll("span")[currentIndex];
   currentSpan.classList.add("next");
+  startButton.blur();
+  startButton.innerText = "Next Lesson";
+
 })
 
 
