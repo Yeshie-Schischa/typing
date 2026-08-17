@@ -21,17 +21,23 @@ class TypingLesson {
   }
 }
 const lessons= [new TypingLesson("חכ"), new TypingLesson("לג"), new TypingLesson("ךד") ];
-lessons.forEach(lesson => {
-   listLessons.innerHTML += `<li class="lesson">${lesson.text}</li>`
+lessons.forEach((lesson, index) => {
+   listLessons.innerHTML += `<li data-index="${index}" class="lesson">${lesson.text}</li>`
 })
 listLessons.addEventListener("click", (e) => {
   if(e.target.closest(".lesson")){
-    console.log(e.target.closest(".lesson").innerText)
+    console.log(e.target.closest(".lesson").dataset.index)
+    startLesson(e.target.dataset.index)
   }
 });
 
+function startLesson(index) {
+  Array.from(createRandomString(lessons[index])).forEach((char) => {
+     textElement.innerHTML += `<span>${char}</span>`;
+ });
+}
 
-function startLesson()
+
 // const timer = document.getElementById("timer");
 // let time = 0
 // const startTimer = () => {
@@ -40,13 +46,13 @@ function startLesson()
 // }
 
 
-// function createRandomString(letters) {
-//   let randomString = "";
-//   for (let i = 0; i < 20; i++) {
-//     randomString += letters[Math.floor(Math.random() * letters.length)];
-//   }
-//   return randomString;
-// } 
+function createRandomString(letters) {
+  let randomString = "";
+  for (let i = 0; i < 20; i++) {
+    randomString += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return randomString;
+} 
 
 // let textToType = "";
 // let correctCount = 0;
