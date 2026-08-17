@@ -7,7 +7,7 @@ const hebrewRegex = /[\u0590-\u05FF]/
 const englishRegex = /^[a-zA-Z]$/;
 const symbolRegex = /,.\;\//
 const dialogOk = document.getElementById("dialog-ok")
-
+const listLessons = document.getElementById("list-lessons")
 
 const timer = document.getElementById("timer");
 let time = 0
@@ -108,8 +108,10 @@ class TypingLesson {
     }
   }
 }
-const lessons= [new TypingLesson("חכ")];
-
+const lessons= [new TypingLesson("חכ"), new TypingLesson("לג"), new TypingLesson("ךד") ];
+lessons.forEach(lesson => {
+  listLessons.innerHTML += `<li>${lesson.text}</li>`
+})
 
 
 startButton.addEventListener("click", () => {
