@@ -12,11 +12,17 @@
         <h1>Welcome to the typing website</h1>
         <h1>Type the following text:</h1>
         <div id="text"></div>
+        <dialog id="keyboard-change">Please change your keyboard to Hebrew<button id="dialog-ok">OK</button></dialog>
         <p>Correct: <span id="correct-count">0</span></p>
         <p>Incorrect: <span id="incorrect-count">0</span></p>
+        <p>Timer: <span id="timer">0:00</span></p>
         <button id="start-button">Start</button>
         <!-- <button id="reset-button">Reset</button> -->
     </main>
+    <section id="lessons-section">
+        <h2>All lessons</h2>
+        <ul id="list-lessons"></ul>
+    </section>
     <script src="script.js"></script>
 </body>
 </html>
