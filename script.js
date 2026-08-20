@@ -8,6 +8,7 @@ const englishRegex = /^[a-zA-Z]$/;
 const symbolRegex = /,.\;\//
 const dialogOk = document.getElementById("dialog-ok");
 const listLessons = document.getElementById("list-lessons");
+const pageWrap = document.getElementById("page-wraper");
 
 
 class TypingLesson {
@@ -32,10 +33,30 @@ listLessons.addEventListener("click", (e) => {
 });
 
 function startLesson(index) {
-  Array.from(createRandomString(lessons[index])).forEach((char) => {
+  Array.from(createRandomString(lessons[index].text)).forEach((char) => {
      textElement.innerHTML += `<span>${char}</span>`;
+     const firstLetter = document.querySelector("#text span");
+     firstLetter.classList.add("next")
  });
 }
+
+
+
+let currentLetter = 0
+pageWrap.addEventListener("keydown", (e)=>{
+  const getLetters = document.querySelectorAll("#text span")
+  if(getLetters[currentLetter].innerText === e.key){
+    getLetters[currentLetter].classList.add("correct")
+    getLetters[currentLetter].classList.remove("next")
+    
+   }  else {
+    getLetters[currentLetter].classList.remove("next")
+    getLetters[currentLetter].classList.add("incorrect")
+
+   }
+   getLetters[currentLetter].nextSibling.classList.add("next")
+   currentLetter++
+})
 
 
 // const timer = document.getElementById("timer");
@@ -48,7 +69,7 @@ function startLesson(index) {
 
 function createRandomString(letters) {
   let randomString = "";
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 60; i++) {
     randomString += letters[Math.floor(Math.random() * letters.length)];
   }
   return randomString;

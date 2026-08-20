@@ -7,6 +7,9 @@ body {
     position: absolute;
     right: 0;
 }
+#page-wraper:focus-visible {
+    outline: none;
+}
 main {
     width: 80%;
     margin: 0 auto;
