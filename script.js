@@ -20,14 +20,18 @@ class TypingLesson {
       time: 0
     }
   }
-}
-const lessons= [new TypingLesson("חכ"), new TypingLesson("לג"), new TypingLesson("ךד") ];
+};
+
+const lessons= [new TypingLesson("חכ"),
+  new TypingLesson("לג"),
+  new TypingLesson("ךד") ];
+
 lessons.forEach((lesson, index) => {
    listLessons.innerHTML += `<li data-index="${index}" class="lesson">${lesson.text}</li>`
-})
+});
+
 listLessons.addEventListener("click", (e) => {
   if(e.target.closest(".lesson")){
-    console.log(e.target.closest(".lesson").dataset.index)
     startLesson(e.target.dataset.index)
   }
 });
@@ -39,8 +43,6 @@ function startLesson(index) {
      firstLetter.classList.add("next")
  });
 }
-
-
 
 let currentLetter = 0
 pageWrap.addEventListener("keydown", (e)=>{
@@ -57,8 +59,6 @@ pageWrap.addEventListener("keydown", (e)=>{
    getLetters[currentLetter].nextSibling.classList.add("next")
    currentLetter++
 })
-
-
 // const timer = document.getElementById("timer");
 // let time = 0
 // const startTimer = () => {
@@ -75,6 +75,10 @@ function createRandomString(letters) {
   return randomString;
 } 
 
+document.addEventListener("keydown", (e) => {
+  isEnglish(e)
+  e.preventDefault
+});
 // let textToType = "";
 // let correctCount = 0;
 // let incorrectCount = 0;
@@ -83,14 +87,14 @@ function createRandomString(letters) {
 // let timming
 // let isFirstKey = true
 // document.addEventListener("keydown", (e) => {
-
-// if (englishRegex.test(e.key)){
-//     console.log(e.key)
-//     keyboardChange.showModal();
-//     e.preventDefault()
-//     return
-//   }
-
+function isEnglish(e){
+if (englishRegex.test(e.key)){
+    console.log(e.key)
+    keyboardChange.showModal();
+    e.preventDefault
+    return
+  }
+}
 
 //   currentSpan = textElement.querySelectorAll("span")[currentIndex];
 
