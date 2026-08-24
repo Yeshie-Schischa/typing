@@ -52,11 +52,13 @@ const tempInfo = {
 
 pageWrap.addEventListener("keydown", (e)=>{
   const getLetters = document.querySelectorAll("#text span")
+  
+  if(tempInfo.currentLetter === getLetters.length) return
   if(getLetters[tempInfo.currentLetter].innerText === e.key){
     getLetters[tempInfo.currentLetter].classList.add("correct");
     tempInfo.correctCount++
     correctCountSpan.innerText = tempInfo.correctCount
-    percentPassed.innerText = (tempInfo.correctCount /getLetters.length) * 100
+    percentPassed.innerText = parseInt((tempInfo.correctCount /getLetters.length) * 100)
    }  else { 
     getLetters[tempInfo.currentLetter].classList.add("incorrect")
     tempInfo.incorrectCount++
