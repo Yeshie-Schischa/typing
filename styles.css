@@ -14,7 +14,7 @@ main {
     width: 80%;
     margin: 0 auto;
     text-align: center;
-    direction: rtl;
+    
     
 }
 main p {
@@ -22,7 +22,7 @@ main p {
     flex-wrap: wrap;    
     justify-content: center; 
 }
-span {
+#text span {
     display: inline-block;
     margin: 4px 4px;
     font-size: 24px;
@@ -31,16 +31,17 @@ span {
 
 }
 
-span.correct {
+#text span.correct {
     
     background-color: rgba(0, 128, 0, 0.527);
 }
-span.incorrect {
+#text span.incorrect {
        background-color: rgba(255, 0, 0, 0.527);    
 }
 main #text {
     width: 50%;
     margin: 20px auto;
+    direction: rtl;
 }
 .next {
     border-bottom: 2px solid blue;

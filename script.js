@@ -9,7 +9,9 @@ const symbolRegex = /,.\;\//
 const dialogOk = document.getElementById("dialog-ok");
 const listLessons = document.getElementById("list-lessons");
 const pageWrap = document.getElementById("page-wraper");
-
+const correctCountSpan = document.getElementById("correct-count");
+const incorrectCountSpan = document.getElementById("incorrect-count");
+const percentPassed = document.getElementById("percent-passed")
 
 class TypingLesson {
   constructor(text) {
@@ -40,22 +42,29 @@ function startLesson(index) {
  });
 }
 
+const tempInfo = {
+  currentLetter: 0,
+  correctCount: 0,
+  incorrectCount: 0,
+  percentage: 0
+}
 
 
-let currentLetter = 0
 pageWrap.addEventListener("keydown", (e)=>{
   const getLetters = document.querySelectorAll("#text span")
-  if(getLetters[currentLetter].innerText === e.key){
-    getLetters[currentLetter].classList.add("correct")
-    getLetters[currentLetter].classList.remove("next")
-    
-   }  else {
-    getLetters[currentLetter].classList.remove("next")
-    getLetters[currentLetter].classList.add("incorrect")
-
+  if(getLetters[tempInfo.currentLetter].innerText === e.key){
+    getLetters[tempInfo.currentLetter].classList.add("correct");
+    tempInfo.correctCount++
+    correctCountSpan.innerText = tempInfo.correctCount
+    percentPassed.innerText = (tempInfo.correctCount /getLetters.length) * 100
+   }  else { 
+    getLetters[tempInfo.currentLetter].classList.add("incorrect")
+    tempInfo.incorrectCount++
+    incorrectCountSpan.innerText = tempInfo.incorrectCount
    }
-   getLetters[currentLetter].nextSibling.classList.add("next")
-   currentLetter++
+   getLetters[tempInfo.currentLetter].classList.remove("next")
+   getLetters[tempInfo.currentLetter].nextSibling.classList.add("next")
+   tempInfo.currentLetter++
 })
 
 
